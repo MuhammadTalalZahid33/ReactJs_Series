@@ -1,23 +1,25 @@
 import React, { useEffect, useState } from 'react'
+import { useLoaderData } from 'react-router-dom'
 
 function Github() {
-    const [data, setData] = useState(33);
-    useEffect(() => {
-        fetch('https://api.github.com/users/muhammadtalalzahid33')
-            .then(response => response.json())
-            .then(data => {
-                setData(data);
-            })
-    }, [])
+    // const [data, setData] = useState(33);
+    // useEffect(() => {
+    //     fetch('https://api.github.com/users/muhammadtalalzahid33')
+    //         .then(response => response.json())
+    //         .then(data => {
+    //             setData(data);
+    //         })
+    // }, [])
 
-    
+    const data = useLoaderData();
+
     return (
         <div className='flex justify-center items-center m-9'>
             <div className='bg-gray-500 w-[700px] p-4 rounded-3xl'>
                 <p className='text-1xl text-white'>
                     Hello, I am Muhammad Talal Zahid, learning React Router DOM as part of my React journey...
                 </p>
-                
+
                 {/* <p>Here's my profile pic</p> */}
                 <img src={data.avatar_url} alt="git image" className='h-32 rounded-full' />
                 <div className='text-2xl text-orange-400'>Github followers: {data.followers}</div>
@@ -28,3 +30,7 @@ function Github() {
 
 export default Github
 
+export const gitHubInfoLoader = async () => {
+    const response = await fetch('https://api.github.com/users/muhammadtalalzahid33')
+    return response.json();
+}

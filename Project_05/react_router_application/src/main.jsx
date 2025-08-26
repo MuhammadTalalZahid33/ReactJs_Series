@@ -2,8 +2,9 @@ import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
 import './index.css'
 import { createBrowserRouter, createRoutesFromElements, RouterProvider, Route } from 'react-router-dom'
-import { Home, About, Contact, User, Github} from './components'
+import { Home, About, Contact, User, Github } from './components'
 import Layout from './Layout'
+import { gitHubInfoLoader } from './components/Accounts/Github'
 
 
 
@@ -35,14 +36,18 @@ const router = createBrowserRouter(
       <Route index element={<Home />} />     {/* index = default */}
       <Route path="about" element={<About />} />
       <Route path="contactus" element={<Contact />} />
-      <Route path="user/:userid" element={<User/>} />
-      <Route path="github" element={<Github/>} />
+      <Route path="user/:userid" element={<User />} />
+      <Route
+        loader={gitHubInfoLoader}
+        path="github"
+        element={<Github />}
+      />
     </Route>
   )
 );
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
-    <RouterProvider router={router}/>
+    <RouterProvider router={router} />
   </StrictMode>,
 )
