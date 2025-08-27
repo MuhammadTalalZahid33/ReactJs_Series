@@ -7,7 +7,7 @@ function App() {
 
   return (
     <>
-      <div className='text-4xl flex justify-center bg-amber-300'>hello context apis...</div>
+      <div className='text-4xl flex justify-center bg-amber-300'>hello from context apis...</div>
       <UserContextProvider>
         <Login/>
         <Profile/>
