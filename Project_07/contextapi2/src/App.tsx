@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
-import './App.css'
 import { ThemeProvider } from './contexts/theme'
+import ThemeBtn from './components/ThemeBtn'
+import Card from './components/Card'
 
 function App() {
   const [themeMode, setThemeMode] = useState("light")
@@ -24,10 +25,12 @@ function App() {
         <div className="w-full">
           <div className="w-full max-w-sm mx-auto flex justify-end mb-4">
             {/* themeBtn */}
+            <ThemeBtn/>
           </div>
 
           <div className="w-full max-w-sm mx-auto">
             {/* CardComp */}
+            <Card/>
           </div>
         </div>
       </div>
