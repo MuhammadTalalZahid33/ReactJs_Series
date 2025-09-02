@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portfolio Image Styling Demo</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            transition: all 0.3s ease;
+            overflow-x: hidden;
+        }
+        
+        /* Light theme styles */
+        body.light-theme {
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            color: #333;
+        }
+        
+        /* Dark theme styles */
+        body.dark-theme {
+            background: linear-gradient(135deg, #0c0c0c 0%, #1a1a2e 50%, #16213e 100%);
+            color: #fff;
+        }
+        
+        /* Theme toggle button */
+        .theme-toggle {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 50px;
+            padding: 12px 24px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            z-index: 1000;
+            font-weight: 500;
+            color: inherit;
+        }
+        
+        .theme-toggle:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+        }
+        
+        /* Main hero section */
+        .hero-section {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 4rem;
+            min-height: 100vh;
+            padding: 2rem 5%;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        
+        .intro-text {
+            flex: 1;
+            max-width: 600px;
+        }
+        
+        .intro-text h1 {
+            font-size: clamp(2.5rem, 5vw, 4rem);
+            font-weight: 700;
+            line-height: 1.2;
+            margin-bottom: 1.5rem;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .intro-text p {
+            font-size: 1.2rem;
+            line-height: 1.6;
+            opacity: 0.8;
+            margin-bottom: 2rem;
+        }
+        
+        .cta-button {
+            display: inline-block;
+            padding: 14px 32px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+        }
+        
+        .cta-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.6);
+        }
+        
+        .image-section {
+            flex: 0 0 auto;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        /* Portfolio Image Container Styling */
+        .portfolio-image-container {
+            position: relative;
+            display: inline-block;
+            max-width: 380px;
+            width: 100%;
+            overflow: visible;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        /* Main image styling - seamless blend effect */
+        .portfolio-image {
+            width: 100%;
+            height: auto;
+            display: block;
+            position: relative;
+            z-index: 3;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            filter: contrast(1.05) brightness(1.02);
+        }
+        
+        /* Seamless background blend overlay */
+        .portfolio-image-container::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            z-index: 4;
+            pointer-events: none;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        /* Subtle depth shadow */
+        .portfolio-image-container::after {
+            content: '';
+            position: absolute;
+            top: 10%;
+            left: 15%;
+            right: 15%;
+            bottom: -2%;
+            z-index: 1;
+            border-radius: 50%;
+            opacity: 0.2;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            filter: blur(25px);
+        }
+        
+        /* Light theme image styling */
+        .light-theme .portfolio-image-container::before {
+            background: radial-gradient(
+                ellipse 120% 120% at center center,
+                transparent 30%,
+                rgba(245, 247, 250, 0.3) 45%,
+                rgba(245, 247, 250, 0.7) 65%,
+                rgba(245, 247, 250, 0.95) 85%,
+                #f5f7fa 100%
+            );
+        }
+        
+        .light-theme .portfolio-image-container::after {
+            background: radial-gradient(
+                ellipse 60% 40% at center 85%,
+                rgba(102, 126, 234, 0.1) 0%,
+                rgba(118, 75, 162, 0.08) 50%,
+                transparent 100%
+            );
+        }
+        
+        /* Dark theme image styling */
+        .dark-theme .portfolio-image-container::before {
+            background: radial-gradient(
+                ellipse 120% 120% at center center,
+                transparent 30%,
+                rgba(12, 12, 12, 0.2) 45%,
+                rgba(26, 26, 46, 0.6) 65%,
+                rgba(22, 33, 62, 0.9) 85%,
+                #16213e 100%
+            );
+        }
+        
+        .dark-theme .portfolio-image-container::after {
+            background: radial-gradient(
+                ellipse 60% 40% at center 85%,
+                rgba(102, 126, 234, 0.15) 0%,
+                rgba(118, 75, 162, 0.12) 50%,
+                transparent 100%
+            );
+        }
+        
+        /* Hover effects */
+        .portfolio-image-container:hover {
+            transform: translateY(-5px) scale(1.02);
+        }
+        
+        .portfolio-image-container:hover .portfolio-image {
+            filter: contrast(1.15) brightness(1.08);
+        }
+        
+        .light-theme .portfolio-image-container:hover::after {
+            opacity: 0.5;
+            transform: scale(1.1);
+        }
+        
+        .dark-theme .portfolio-image-container:hover::after {
+            opacity: 0.4;
+            transform: scale(1.1);
+        }
+        
+        /* Floating animation */
+        .portfolio-image-container {
+            animation: float 6s ease-in-out infinite;
+        }
+        
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+        }
+        
+        .portfolio-image-container:hover {
+            animation-play-state: paused;
+        }
+        
+        /* Responsive design */
+        @media (max-width: 968px) {
+            .hero-section {
+                flex-direction: column;
+                text-align: center;
+                gap: 3rem;
+                padding: 2rem;
+            }
+            
+            .image-section {
+                order: -1;
+            }
+            
+            .portfolio-image-container {
+                max-width: 300px;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .hero-section {
+                gap: 2rem;
+                padding: 1rem;
+            }
+            
+            .portfolio-image-container {
+                max-width: 250px;
+                border-radius: 16px;
+            }
+            
+            .portfolio-image {
+                border-radius: 16px;
+            }
+            
+            .portfolio-image-container::before {
+                border-radius: 24px;
+                top: -8px;
+                left: -8px;
+                right: -8px;
+                bottom: -8px;
+            }
+            
+            .portfolio-image-container::after {
+                border-radius: 20px;
+            }
+        }
+        
+        /* Background pattern */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0.03;
+            z-index: -1;
+            background: 
+                radial-gradient(circle at 25% 25%, currentColor 2px, transparent 2px),
+                radial-gradient(circle at 75% 75%, currentColor 2px, transparent 2px);
+            background-size: 60px 60px;
+            background-position: 0 0, 30px 30px;
+        }
+    </style>
+</head>
+<body class="light-theme">
+    <button class="theme-toggle" onclick="toggleTheme()">🌓 Toggle Theme</button>
+    
+    <div class="hero-section">
+        <div class="intro-text">
+            <h1>Hello, I'm a Creative Developer</h1>
+            <p>I craft digital experiences that blend innovative design with cutting-edge technology. Passionate about creating meaningful solutions that make a difference.</p>
+            <a href="#" class="cta-button">View My Work</a>
+        </div>
+        
+        <div class="image-section">
+            <div class="portfolio-image-container">
+                <img src="" 
+                     alt="Portfolio" 
+                     class="portfolio-image"
+                     id="portfolioImg">
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function toggleTheme() {
+            const body = document.body;
+            const isLight = body.classList.contains('light-theme');
+            
+            if (isLight) {
+                body.classList.remove('light-theme');
+                body.classList.add('dark-theme');
+            } else {
+                body.classList.remove('dark-theme');
+                body.classList.add('light-theme');
+            }
+        }
+        
+        // Load the uploaded image
+        const img = document.getElementById('portfolioImg');
+        
+        // Use the file reading API to load your uploaded image
+        async function loadImage() {
+            try {
+                const imageData = await window.fs.readFile('image.jpg');
+                const blob = new Blob([imageData], { type: 'image/jpeg' });
+                const imageUrl = URL.createObjectURL(blob);
+                img.src = imageUrl;
+            } catch (error) {
+                console.log('Could not load uploaded image, using fallback');
+                // Fallback to a demo image
+                img.src = 'portfolioimage.png';
+            }
+        }
+        
+        loadImage();
+        
+        // Add some interactive effects
+        const container = document.querySelector('.portfolio-image-container');
+        
+        container.addEventListener('mousemove', (e) => {
+            const rect = container.getBoundingClientRect();
+            const x = e.clientX - rect.left;
+            const y = e.clientY - rect.top;
+            
+            const centerX = rect.width / 2;
+            const centerY = rect.height / 2;
+            
+            const rotateX = (y - centerY) / 10;
+            const rotateY = (centerX - x) / 10;
+            
+            container.style.transform = `translateY(-8px) scale(1.02) rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
+        });
+        
+        container.addEventListener('mouseleave', () => {
+            container.style.transform = '';
+        });
+    </script>
+</body>
+</html>
